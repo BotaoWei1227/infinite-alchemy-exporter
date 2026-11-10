@@ -15,7 +15,8 @@ function setConnected(connected) {
   $("connectButton").classList.toggle("hidden", connected);
   $("disconnectButton").classList.toggle("hidden", !connected);
   $("refreshButton").disabled = !connected;
-  $("exportButton").disabled = !connected || (!state.inventory.length && !state.inventions.length);
+  $("exportInventoryButton").disabled = !connected;
+  $("exportInventionsButton").disabled = !connected;
 }
 function renderList(id, items) {
   const list = $(id); list.replaceChildren();
@@ -39,7 +40,8 @@ function renderData() {
   $("profileLine").textContent = `已連結工坊：${name}`;
   renderList("inventoryPreview", state.inventory);
   renderList("inventionsPreview", state.inventions);
-  $("exportButton").disabled = false;
+  $("exportInventoryButton").disabled = false;
+  $("exportInventionsButton").disabled = false;
 }
 
 async function loadData() {
@@ -76,10 +78,15 @@ async function initialize() {
   $("refreshButton").addEventListener("click", async () => {
     try { await loadData(); } catch (e) { message("dataMessage", e.message, "error"); }
   });
-  $("exportButton").addEventListener("click", () => {
-    const content = buildExportText({ profile: state.profile, inventory: state.inventory, inventions: state.inventions });
-    downloadText(content);
-    message("exportMessage", "備份檔已產生，請確認瀏覽器的下載項目。", "success");
+  $("exportInventoryButton").addEventListener("click", () => {
+    const content = buildExportText({ profile: state.profile, items: state.inventory, type: "inventory" });
+    downloadText(content, "infinite-alchemy-inventory.txt");
+    message("exportMessage", `背包備份已產生，共 ${state.inventory.length} 項。`, "success");
+  });
+  $("exportInventionsButton").addEventListener("click", () => {
+    const content = buildExportText({ profile: state.profile, items: state.inventions, type: "inventions" });
+    downloadText(content, "infinite-alchemy-inventions.txt");
+    message("exportMessage", `創生物備份已產生，共 ${state.inventions.length} 項。`, "success");
   });
 
   try {

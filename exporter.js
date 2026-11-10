@@ -21,29 +21,29 @@ function formatItems(items) {
   }).join("\n\n");
 }
 
-export function buildExportText({ profile, inventory, inventions, exportedAt = new Date() }) {
+export function buildExportText({ profile, items, type, exportedAt = new Date() }) {
   const workshop = safeText(profile?.workshopName) || "未提供工坊名稱";
   const title = safeText(profile?.displayTitle);
+  const isInventory = type === "inventory";
+  const sectionTitle = isInventory
+    ? "目前持有的創生物（Inventory）"
+    : "自己首次創造的發明（Inventions）";
+  const fileTitle = isInventory ? "背包備份" : "創生物備份";
+  const list = Array.isArray(items) ? items : [];
   return [
-    "無限煉製｜創生物圖鑑備份",
+    `無限煉製｜${fileTitle}`,
     "非官方玩家工具匯出資料",
     `工坊：${workshop}`,
     ...(title ? [`稱號：${title}`] : []),
     `匯出時間：${exportedAt.toLocaleString("zh-TW", { timeZone: "Asia/Taipei", hour12: false })}`,
-    `目前持有：${inventory.length} 項`,
-    `首次創造：${inventions.length} 項`,
+    `資料筆數：${list.length} 項`,
     "",
     "========================================",
-    "一、目前持有的創生物（Inventory）",
+    sectionTitle,
     "========================================",
-    formatItems(inventory),
+    formatItems(list),
     "",
-    "========================================",
-    "二、自己首次創造的發明（Inventions）",
-    "========================================",
-    formatItems(inventions),
-    "",
-    "備註：兩個章節依照平台 API 分別匯出，不會自動去重。",
+    "備註：本檔案只包含所選類型的資料。",
     "manifestation URL 僅使用本次 API 回傳的 HTTPS 連結。"
   ].join("\n");
 }
@@ -57,5 +57,5 @@ export function downloadText(text, filename = "infinite-alchemy-collection.txt")
   document.body.append(anchor);
   anchor.click();
   anchor.remove();
-  URL.revokeObjectURL(url);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }

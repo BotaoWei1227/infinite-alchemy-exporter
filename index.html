@@ -47,8 +47,11 @@
 
     <section class="panel export-panel">
       <div class="section-heading"><div><div class="eyebrow">STEP 03</div><h2>匯出備份</h2></div><span class="file-tag">.TXT · UTF-8</span></div>
-      <p class="muted">匯出檔會分成兩個章節。若同一項創生物同時出現在兩類資料中，會保留在兩個章節，不會擅自合併。</p>
-      <button id="exportButton" class="primary" disabled>下載我的創生物圖鑑</button>
+      <p class="muted">選擇想要備份的資料類型，系統會分別產生獨立的 TXT 檔案。</p>
+      <div class="export-actions">
+        <button id="exportInventoryButton" class="primary" disabled>下載背包 TXT <span>Inventory</span></button>
+        <button id="exportInventionsButton" class="primary" disabled>下載創生物 TXT <span>Inventions</span></button>
+      </div>
       <p id="exportMessage" class="message" role="status" aria-live="polite"></p>
     </section>
 
