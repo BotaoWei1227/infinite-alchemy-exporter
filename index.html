@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="將你在無限煉製中的創生物與發明匯出為 TXT 備份。">
+  <title>創生物圖鑑匯出器</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div class="eyebrow">PLAYER TOOL · DATA EXPORT</div>
+      <h1>創生物圖鑑<span>匯出器</span></h1>
+      <p>把你的創造收藏整理成一份可保存的文字備份。</p>
+      <div class="notice">非官方玩家工具，並非《無限煉製》官方活動。</div>
+    </header>
+
+    <section class="panel auth-panel">
+      <div class="section-heading">
+        <div><div class="eyebrow">STEP 01</div><h2>連結遊戲帳號</h2></div>
+        <span id="connectionBadge" class="status">尚未連結</span>
+      </div>
+      <p id="authDescription" class="muted">登入後只會讀取個人資料、目前持有的創生物，以及你首次創造的發明。</p>
+      <button id="connectButton" class="primary">使用《無限煉製》帳號登入</button>
+      <button id="disconnectButton" class="quiet hidden">清除本次連線</button>
+      <p id="authMessage" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div><div class="eyebrow">STEP 02</div><h2>你的創造收藏</h2></div>
+        <button id="refreshButton" class="secondary" disabled>重新讀取</button>
+      </div>
+      <div class="stats">
+        <article class="stat-card"><span>目前持有</span><strong id="inventoryCount">—</strong><small>Inventory</small></article>
+        <article class="stat-card"><span>首次創造</span><strong id="inventionsCount">—</strong><small>Inventions</small></article>
+      </div>
+      <div id="profileLine" class="profile-line">尚未取得玩家資料</div>
+      <div id="dataMessage" class="message" role="status" aria-live="polite">登入後即可載入資料。</div>
+      <div class="preview-grid">
+        <div><h3>目前持有的創生物</h3><ul id="inventoryPreview" class="preview-list"><li class="empty">尚無資料</li></ul></div>
+        <div><h3>自己首次創造的發明</h3><ul id="inventionsPreview" class="preview-list"><li class="empty">尚無資料</li></ul></div>
+      </div>
+    </section>
+
+    <section class="panel export-panel">
+      <div class="section-heading"><div><div class="eyebrow">STEP 03</div><h2>匯出備份</h2></div><span class="file-tag">.TXT · UTF-8</span></div>
+      <p class="muted">匯出檔會分成兩個章節。若同一項創生物同時出現在兩類資料中，會保留在兩個章節，不會擅自合併。</p>
+      <button id="exportButton" class="primary" disabled>下載我的創生物圖鑑</button>
+      <p id="exportMessage" class="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <footer>
+      <p>資料只在你的瀏覽器中處理；本工具不會將收藏上傳至自建伺服器。</p>
+      <p><a href="https://pillars-of-creation.funtuan.work/developer" target="_blank" rel="noopener noreferrer">Developer Center</a> · <a href="https://github.com/" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    </footer>
+  </main>
+  <script src="./config.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
